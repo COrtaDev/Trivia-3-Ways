@@ -1,6 +1,6 @@
 import { getClue as getClueFromCallback } from "./callback-version.js";
 import { getClue as getClueFromPromise } from "./promise-version.js";
-// import { getClue as getClueFromAsyncFunction } from "./async-await-version.js";
+import { getClue as getClueFromAsyncFunction } from "./async-await-version.js";
 
 let score = 0;
 
@@ -8,7 +8,7 @@ function updateHTMLfromClue(clue) {
     document.getElementById("question").innerHTML = `Question is: ${clue.question}`;
     document.getElementById("answer").innerHTML = clue.answer;
     document.getElementById("value").innerHTML = clue.value;
-    document.getElementById("category-title").innerHTML = `Category is: ${clue.category.title}`;
+    document.getElementById("category-title").innerHTML = `Category is: ${clue.category.title}, Originally aired on: ${clue.game.aired}`;
     let isValid = "valid"
     if (clue.invalid_count > 0) {
         isValid = "invalid";
@@ -21,13 +21,11 @@ function updateHTMLfromClue(clue) {
     document
         .querySelector(".pure-form")
         .reset();
-
-
-
 }
+// define a function to save to local storage --> function saveGame(){}
 
 window.addEventListener("DOMContentLoaded", () => {
-
+    //check for condition is the data in local storage ex: state !== null load game, else -->do nothing
     document
         .getElementById("use-callback")
         .addEventListener("click", event => {
@@ -35,7 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
             getClueFromCallback((err, clue) => {
                 if (err !== null) return console.error(err);
                 updateHTMLfromClue(clue);
-
+                //saveGame(clue.id);
             });
             document
                 .getElementById("answer")
@@ -49,6 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
             getClueFromPromise()
                 .then(clue => updateHTMLfromClue(clue))
                 .catch(err => console.log(err));
+            //saveGame(clue.id);
 
             document
                 .getElementById("answer")
@@ -64,6 +63,8 @@ window.addEventListener("DOMContentLoaded", () => {
             try {
                 const clue = await getClueFromAsyncFunction();
                 updateHTMLfromClue(clue);
+                //saveGame(clue.id);
+
             } catch (err) {
                 console.log(err);
             }
@@ -108,8 +109,5 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
         });
-
-
-
 
 });
