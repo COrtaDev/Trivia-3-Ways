@@ -1,6 +1,6 @@
 import { getClue as getClueFromCallback } from "./callback-version.js";
-import { getClue as getClueFromPromise } from "./promise-version.js";
-import { getClue as getClueFromAsyncFunction } from "./async-await-version.js";
+// import { getClue as getClueFromPromise } from "./promise-version.js";
+// import { getClue as getClueFromAsyncFunction } from "./async-await-version.js";
 
 let score = 0;
 
